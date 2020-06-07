@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Vexil</title>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.jsdelivr.net/npm/fomantic-ui@2.8.5/dist/semantic.min.css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/fomantic-ui@2.8.5/dist/semantic.min.js"></script>
+    <script src="./index.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        init();
+      });
+    </script>
+    <style>
+      .vexil-home-empty-content-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .vexil-flex-align-right {
+        display: flex;
+        justify-content: flex-end;
+      }
+
+      .vexil-flex-align-center {
+        display: flex;
+        justify-content: center;
+      }
+
+      .vexil-hidden {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="ui text container">
+      <div class="ui bottom attached menu">
+        <a class="header item" href="/">Vexil</a>
+      </div>
+
+      <div class="ui hidden divider"></div>
+
+      <div class="vexil-home-loading-content-container">
+        <div class="ui active centered inline loader"></div>
+      </div>
+
+      <div class="vexil-home-empty-content-container">
+        <h2 class="ui header">Welcome!</h2>
+        <p>Get started by creating your first flag.</p>
+        <button id="add-flag-btn" class="ui primary button">
+          Add Flag
+        </button>
+      </div>
+
+      <div class="vexil-home-loaded-content-container">
+        <div class="vexil-flex-align-right">
+          <button id="add-flag-btn" class="ui primary button">
+            Add Flag
+          </button>
+        </div>
+
+        <table class="ui celled small table">
+          <thead>
+            <tr>
+              <th class="nine wide">Name</th>
+              <th class="one wide">Status</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+
+      <div class="ui tiny modal">
+        <div class="header">Add Flag</div>
+        <div class="content">
+          <form class="ui form">
+            <div class="field">
+              <label>Name</label>
+              <input type="text" name="name" placeholder="Name" />
+            </div>
+          </form>
+        </div>
+        <div class="actions">
+          <div id="save-flag-btn" class="ui primary button">Save</div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

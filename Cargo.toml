@@ -1,0 +1,16 @@
+[package]
+name = "vexil"
+version = "0.1.0"
+authors = ["sheshbabu <sheshbabu@gmail.com>"]
+edition = "2018"
+
+[dependencies]
+actix-web = "2"
+actix-rt = "1"
+actix-files = "0.2.2"
+sqlx = { version = "0.3", features = [ "postgres" ] }
+anyhow = "1.0.28"
+serde = "1.0.106"
+serde_json = "1.0.51"
+log = "0.4.0"
+env_logger = "0.7.1"
