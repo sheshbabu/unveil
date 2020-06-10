@@ -51,9 +51,8 @@ async fn main() -> Result<()> {
     std::env::set_var("RUST_LOG", "actix_server=info,actix_web=info");
     env_logger::init();
 
-    let db_pool = PgPool::new("postgres://postgres@127.0.0.1/postgres")
-        .await
-        .unwrap();
+    let database_url = std::env::var("DATABASE_URL").unwrap();
+    let db_pool = PgPool::new(&database_url).await.unwrap();
 
     HttpServer::new(move || {
         App::new()
