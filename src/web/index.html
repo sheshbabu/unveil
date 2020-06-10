@@ -9,55 +9,41 @@
       href="https://cdn.jsdelivr.net/npm/fomantic-ui@2.8.5/dist/semantic.min.css"
     />
     <script src="https://cdn.jsdelivr.net/npm/fomantic-ui@2.8.5/dist/semantic.min.js"></script>
-    <script src="./index.js"></script>
-    <script>
-      document.addEventListener("DOMContentLoaded", () => {
-        init();
-      });
-    </script>
-    <style>
-      .vexil-home-empty-content-container {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-      }
-
-      .vexil-flex-align-right {
-        display: flex;
-        justify-content: flex-end;
-      }
-
-      .vexil-flex-align-center {
-        display: flex;
-        justify-content: center;
-      }
-
-      .vexil-hidden {
-        display: none;
-      }
-    </style>
+    <script defer src="./index.js"></script>
   </head>
   <body>
-    <div class="ui text container">
+    <vx-app loading="true" flags="null"></vx-app>
+
+    <template id="vx-header">
       <div class="ui bottom attached menu">
         <a class="header item" href="/">Vexil</a>
       </div>
-
       <div class="ui hidden divider"></div>
+    </template>
 
-      <div class="vexil-home-loading-content-container">
-        <div class="ui active centered inline loader"></div>
-      </div>
+    <template id="vx-loader">
+      <div class="ui active centered inline loader"></div>
+    </template>
 
-      <div class="vexil-home-empty-content-container">
+    <template id="vx-empty-content">
+      <style>
+        .vx-empty-content {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+        }
+      </style>
+      <div class="vx-empty-content">
         <h2 class="ui header">Welcome!</h2>
         <p>Get started by creating your first flag.</p>
         <button id="add-flag-btn" class="ui primary button">
           Add Flag
         </button>
       </div>
+    </template>
 
-      <div class="vexil-home-loaded-content-container">
+    <template id="vx-content">
+      <div>
         <div class="vexil-flex-align-right">
           <button id="add-flag-btn" class="ui primary button">
             Add Flag
@@ -74,7 +60,9 @@
           <tbody></tbody>
         </table>
       </div>
+    </template>
 
+    <template id="vx-modal">
       <div class="ui tiny modal">
         <div class="header">Add Flag</div>
         <div class="content">
@@ -89,6 +77,8 @@
           <div id="save-flag-btn" class="ui primary button">Save</div>
         </div>
       </div>
-    </div>
+    </template>
+
+    <!-- -->
   </body>
 </html>
