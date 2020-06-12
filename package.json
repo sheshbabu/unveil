@@ -1,0 +1,24 @@
+{
+  "name": "vexil",
+  "version": "1.0.0",
+  "description": "Simple feature flag service written using ActixWeb, SQLx and FomanticUI",
+  "author": "sheshbabu@gmail.com",
+  "license": "MIT",
+  "main": "index.js",
+  "scripts": {
+    "dev": "parcel web/index.html",
+    "build": "parcel build web/index.html --no-source-maps"
+  },
+  "devDependencies": {
+    "@types/react": "16.9.36",
+    "@types/react-dom": "16.9.8",
+    "parcel-bundler": "1.12.4",
+    "typescript": "3.9.5"
+  },
+  "dependencies": {
+    "react": "16.13.1",
+    "react-dom": "16.13.1",
+    "semantic-ui-css": "2.4.1",
+    "semantic-ui-react": "0.88.2"
+  }
+}

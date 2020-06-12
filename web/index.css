@@ -1,0 +1,10 @@
+.vx-empty-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.vx-content {
+  display: flex;
+  justify-content: flex-end;
+}

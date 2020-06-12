@@ -17,7 +17,7 @@ struct CreateFlag {
 }
 
 async fn get_all_flags(db_pool: web::Data<PgPool>) -> impl Responder {
-    let result = sqlx::query_as::<_, Flag>("SELECT name, is_enabled from flags")
+    let result = sqlx::query_as::<_, Flag>("SELECT name, is_enabled from flags ORDER BY name")
         .fetch_all(db_pool.get_ref())
         .await
         .unwrap();
@@ -66,7 +66,7 @@ async fn main() -> Result<()> {
                     .route("/flags", web::post().to(create_flag))
                     .route("/flags", web::put().to(update_flag)),
             )
-            .service(fs::Files::new("/", "./src/web").index_file("index.html"))
+            .service(fs::Files::new("/", "./dist").index_file("index.html"))
     })
     .bind("127.0.0.1:3000")?
     .run()
