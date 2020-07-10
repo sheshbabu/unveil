@@ -15,9 +15,13 @@ import {
 import request from "./request";
 
 type Flag = {
-  id: string;
+  id: number;
+  key: string;
   name: string;
-  is_enabled: boolean;
+  description: string;
+  is_on: boolean;
+  created_at: string;
+  updated_at: string;
 };
 
 export default function App() {
@@ -98,10 +102,15 @@ type FlagsTableProps = {
 };
 
 function FlagsTable(props: FlagsTableProps) {
-  async function handleFlagToggle(data: CheckboxProps, flagName: string) {
-    const name = flagName;
-    const is_enabled = data.checked;
-    await request("/api/flags", "PUT", { name, is_enabled });
+  async function handleFlagToggle(data: CheckboxProps, flag: Flag) {
+    const is_on = data.checked;
+    await request("/api/flags", "PUT", {
+      id: flag.id,
+      key: flag.key,
+      name: flag.name,
+      description: flag.description,
+      is_on,
+    });
     props.onFlagToggle();
   }
 
@@ -110,7 +119,7 @@ function FlagsTable(props: FlagsTableProps) {
       <Table.Row>
         <Table.Cell>{flag.name}</Table.Cell>
         <Table.Cell>
-          <Checkbox toggle checked={flag.is_enabled} onChange={(e, data) => handleFlagToggle(data, flag.name)} />
+          <Checkbox toggle checked={flag.is_on} onChange={(e, data) => handleFlagToggle(data, flag)} />
         </Table.Cell>
       </Table.Row>
     );
@@ -145,15 +154,19 @@ type AddFlagModalProps = {
 function AddFlagModal(props: AddFlagModalProps) {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [name, setName] = React.useState<string>("");
+  const [key, setKey] = React.useState<string>("");
+  const [description, setDescription] = React.useState<string>("");
 
   React.useEffect(() => {
     setName("");
+    setKey("");
+    setDescription("");
     setIsLoading(false);
   }, [props.isOpen]);
 
   async function handleSaveFlagClick() {
     setIsLoading(true);
-    await request("/api/flags", "POST", { name });
+    await request("/api/flags", "POST", { name, key, description });
     setIsLoading(false);
     props.onSaveFlagClick();
   }
@@ -166,6 +179,14 @@ function AddFlagModal(props: AddFlagModalProps) {
           <Form.Field>
             <label>Name</label>
             <input placeholder="Name" value={name} onChange={(e) => setName(e.target.value)} />
+          </Form.Field>
+          <Form.Field>
+            <label>Key</label>
+            <input placeholder="Key" value={key} onChange={(e) => setKey(e.target.value)} />
+          </Form.Field>
+          <Form.Field>
+            <label>Description</label>
+            <input placeholder="Description" value={description} onChange={(e) => setDescription(e.target.value)} />
           </Form.Field>
         </Form>
       </Modal.Content>
