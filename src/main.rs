@@ -1,5 +1,6 @@
 use actix_files as fs;
 use actix_web::{middleware, web, App, HttpResponse, HttpServer, Responder};
+use dotenv::dotenv;
 use serde::{Deserialize, Serialize};
 use sqlx::postgres::PgQueryAs;
 use sqlx::{FromRow, PgPool};
@@ -17,7 +18,16 @@ struct CreateFlag {
 }
 
 async fn get_all_flags(db_pool: web::Data<PgPool>) -> impl Responder {
-    let result = sqlx::query_as::<_, Flag>("SELECT name, is_enabled from flags ORDER BY name")
+    let statement = "
+        SELECT
+            name,
+            is_enabled
+        FROM
+            flags
+        ORDER BY
+            name
+    ";
+    let result = sqlx::query_as::<_, Flag>(statement)
         .fetch_all(db_pool.get_ref())
         .await
         .unwrap();
@@ -26,7 +36,13 @@ async fn get_all_flags(db_pool: web::Data<PgPool>) -> impl Responder {
 }
 
 async fn create_flag(item: web::Json<CreateFlag>, db_pool: web::Data<PgPool>) -> impl Responder {
-    let result = sqlx::query_as::<_, Flag>("INSERT INTO flags (name) VALUES ($1)")
+    let statement = "
+        INSERT INTO
+            flags (name)
+        VALUES
+            ($1)
+    ";
+    let result = sqlx::query_as::<_, Flag>(statement)
         .bind(&item.name)
         .fetch_all(db_pool.get_ref())
         .await
@@ -36,7 +52,15 @@ async fn create_flag(item: web::Json<CreateFlag>, db_pool: web::Data<PgPool>) ->
 }
 
 async fn update_flag(item: web::Json<Flag>, db_pool: web::Data<PgPool>) -> impl Responder {
-    let result = sqlx::query_as::<_, Flag>("UPDATE flags SET is_enabled = $2 WHERE name = $1;")
+    let statement = "
+        UPDATE
+            flags
+        SET
+            is_enabled = $2
+        WHERE
+            name = $1
+    ";
+    let result = sqlx::query_as::<_, Flag>(statement)
         .bind(&item.name)
         .bind(&item.is_enabled)
         .fetch_all(db_pool.get_ref())
@@ -48,10 +72,11 @@ async fn update_flag(item: web::Json<Flag>, db_pool: web::Data<PgPool>) -> impl 
 
 #[actix_rt::main]
 async fn main() -> Result<()> {
-    std::env::set_var("RUST_LOG", "actix_server=info,actix_web=info");
+    dotenv().ok();
     env_logger::init();
 
-    let database_url = std::env::var("DATABASE_URL").unwrap();
+    let database_url =
+        std::env::var("DATABASE_URL").expect("Please set the DATABASE_URL environment variable");
     let db_pool = PgPool::new(&database_url).await.unwrap();
 
     HttpServer::new(move || {
