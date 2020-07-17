@@ -17,7 +17,7 @@ async fn main() -> Result<()> {
 
     HttpServer::new(move || {
         App::new()
-            .wrap(middleware::Logger::new("%r %s"))
+            .wrap(middleware::Logger::new("%s %r"))
             .data(db_pool.clone())
             .service(
                 web::scope("/api")
