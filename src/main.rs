@@ -1,5 +1,7 @@
 mod api;
 mod db;
+mod model;
+mod types;
 
 use actix_files as fs;
 use actix_web::{middleware, web, App, HttpServer};
@@ -11,16 +13,11 @@ async fn main() -> Result<()> {
     dotenv().ok();
     env_logger::init();
 
-    let database_url =
-        std::env::var("DATABASE_URL").expect("Please set the DATABASE_URL environment variable");
-
-    let db_pool = db::init(database_url).await;
+    let db_pool = db::init().await;
 
     HttpServer::new(move || {
         App::new()
-            .wrap(middleware::DefaultHeaders::new().header("X-Version", "0.2"))
-            .wrap(middleware::Compress::default())
-            .wrap(middleware::Logger::default())
+            .wrap(middleware::Logger::new("%r %s"))
             .data(db_pool.clone())
             .service(
                 web::scope("/api")
