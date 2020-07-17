@@ -53,8 +53,11 @@ export default function App() {
     await fetchFlags();
   }
 
-  async function handleFlagToggle() {
-    await fetchFlags();
+  async function handleFlagToggle(flagId: number) {
+    const newFlags = [...flags];
+    const updatedFlag = newFlags.find((flag) => flag.id === flagId);
+    updatedFlag.is_on = !updatedFlag.is_on;
+    setFlags(newFlags);
   }
 
   function handleModalClose() {
@@ -98,7 +101,7 @@ export default function App() {
 type FlagsTableProps = {
   flags: Flag[];
   onAddFlagClick: () => void;
-  onFlagToggle: () => void;
+  onFlagToggle: (flagId: number) => void;
 };
 
 function FlagsTable(props: FlagsTableProps) {
@@ -111,7 +114,7 @@ function FlagsTable(props: FlagsTableProps) {
       description: flag.description,
       is_on,
     });
-    props.onFlagToggle();
+    props.onFlagToggle(flag.id);
   }
 
   const rows = props.flags.map((flag) => {
