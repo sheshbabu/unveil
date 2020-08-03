@@ -1,0 +1,11 @@
+[tasks.frontend]
+command = "npm"
+args = ["run", "dev"]
+
+[tasks.backend]
+command = "cargo"
+args = ["run"]
+watch = { watch = ["./src/"] }
+
+[tasks.dev]
+run_task = { name = ["frontend", "backend"], parallel = true }
