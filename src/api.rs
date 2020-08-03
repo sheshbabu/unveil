@@ -1,5 +1,5 @@
-use super::model;
-use super::types::{CreateFlag, UpdateFlag};
+use crate::model;
+use crate::types::{CreateFlag, UpdateFlag};
 use actix_web::web::{Data, Json};
 use actix_web::{HttpResponse, Responder};
 use sqlx::PgPool;
