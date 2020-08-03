@@ -89,7 +89,7 @@ export default function App() {
   return (
     <Container text>
       <Menu attached="bottom">
-        <Menu.Item header>Vexil</Menu.Item>
+        <Menu.Item header>Unveil</Menu.Item>
       </Menu>
       <Divider hidden />
       {content}

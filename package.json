@@ -1,7 +1,7 @@
 {
-  "name": "vexil",
+  "name": "unveil",
   "version": "1.0.0",
-  "description": "Simple feature flag service written using ActixWeb, SQLx and FomanticUI",
+  "description": "Simple feature flag service written using ActixWeb, SQLx and React",
   "author": "sheshbabu@gmail.com",
   "license": "MIT",
   "main": "index.js",
