@@ -2218,7 +2218,6 @@ dependencies = [
  "actix-files",
  "actix-rt",
  "actix-web",
- "anyhow",
  "chrono",
  "dotenv",
  "env_logger",
