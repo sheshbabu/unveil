@@ -1,5 +1,6 @@
 mod api;
 mod db;
+mod error;
 mod model;
 mod types;
 

@@ -1,9 +1,12 @@
-use super::types::{CreateFlag, Flag, UpdateFlag};
+use crate::error::Error;
+use crate::types::{CreateFlag, Flag, UpdateFlag};
 use actix_web::web::Json;
-use sqlx::{Error, PgPool};
+use sqlx::PgPool;
 use std::result::Result;
 
-pub async fn get_all_flags(pool: &PgPool) -> Result<Vec<Flag>, Error> {
+type SqlResult<T> = Result<T, Error>;
+
+pub async fn get_all_flags(pool: &PgPool) -> SqlResult<Vec<Flag>> {
   let result = sqlx::query_as!(
     Flag,
     "
@@ -22,7 +25,7 @@ pub async fn get_all_flags(pool: &PgPool) -> Result<Vec<Flag>, Error> {
   return Ok(result);
 }
 
-pub async fn create_flag(pool: &PgPool, flag: Json<CreateFlag>) -> Result<(), Error> {
+pub async fn create_flag(pool: &PgPool, flag: Json<CreateFlag>) -> SqlResult<()> {
   sqlx::query!(
     "
     INSERT INTO
@@ -40,7 +43,7 @@ pub async fn create_flag(pool: &PgPool, flag: Json<CreateFlag>) -> Result<(), Er
   return Ok(());
 }
 
-pub async fn update_flag(pool: &PgPool, flag: Json<UpdateFlag>) -> Result<(), Error> {
+pub async fn update_flag(pool: &PgPool, flag: Json<UpdateFlag>) -> SqlResult<()> {
   sqlx::query!(
     "
     UPDATE
