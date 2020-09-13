@@ -5,9 +5,8 @@ authors = ["sheshbabu <sheshbabu@gmail.com>"]
 edition = "2018"
 
 [dependencies]
-actix-web = "2"
-actix-rt = "1"
-actix-files = "0.2.2"
+actix-web = "3"
+actix-files = "0.3.0"
 chrono = { version = "0.4.13", features = ["serde"] }
 sqlx = { version = "0.3", features = [ "postgres", "chrono" ] }
 sqlx-pg-migrate = "1.0.4"
